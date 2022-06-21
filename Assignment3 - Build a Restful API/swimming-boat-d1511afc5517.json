@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "swimming-boat",
+  "private_key_id": "d1511afc55177f5adf144c286be5293b6a12d56b",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDHjFgWBEQwNyd0\nQRqe6L5Lhi+EKfjzJAEVU1Ds9pbZ2tSOoP11e0ybt8cvI0Z8De+B+eeVhHF2SNVb\nFfk9hi4X+oNG03ghGbyD1Bcf0l80tYp51x9NwwEfA7lcUKDjKBIhsOiE4yRWmRHn\nb+dEOgWYrW3PoaZuIF/05HfW2yBuy/D3nh3Ir4OYdav8SHiUkEy2pUDOUjZvqnQQ\nFG8FzVCJfsBdvqB1RE1JCJh7W45BHvm3m0Ktoqm2LwL/bZsDQHY537Xl766PRzVU\nL4IXN170edTUFSx+YfFWJlA1Z61tk8Q3Xy+YZnXKsVCH/f35a8DQ8Zo9U15oPbXm\nH+t/3LHLAgMBAAECggEAYr61xitVTOC2IuamlDVLGZdswwN8IGFUMefZN3Gs42BQ\n58WNtwmNNs9h/xb/JZtFxnVSXqA7/1L6VUkR3ZqdC5uZQ76YhxSzvy6AROx21V/y\nhulnobTaRK00mBSEEPR+yHJBFaVLEZlMjVDISfBGXa+Qk/sDnyJhKY+3J7imm3xr\nbzcNbDBfuMNTHVp2V+RdzXqBReuBPvF3lu6vzGQ2CfjioEIWVQky95Xz3I3GjVoC\n7/dlWjlvxNOalRaRlIxvzWTEachrqdRNlue7AKR+b+I5zswRD2WDa143mw89cUVR\nYFxZfb4aYOvfErhVbGZVYCv4XiCxpd1W5FdWHAGOkQKBgQDjfrtaRVWtyMr0WWK4\nVYAvWRN4gakxLIhrOR2vsiG3rfNaVW4Sqhz8fLxrbEoUqPzB6LsZkvJUpt9mxFSx\nh6p8obI0xnCYCYhEeXZ4Ret+yMudKfGZYlOZfeO9yfYm5dOAgOlQ7eg3HqqJ13Ta\nJCFZd7SnaLjYHe9KiKUwItmfGwKBgQDgjSxIFWtiQrf73G5L4oq+UEEO8xhOW/ka\n2qnzX79sRZ48gYi/yLfU1uI/3aTiDlCzy9d+nevGz7cugGNPT9icmE2yZE3Yy3zl\n4V7tZ6JH1kOsWsWOfvb9o6aVLCXxPBQ3x6O21000HyjZixCGhQhFbMfI0qU8/Olg\nbkmX5dBzEQKBgQDdNy8X6LQX+VjhosnMVdgAMq4sUGkl2BgPq8qiPqVq50vsW4Zd\nv+3P17ug+fxPesPOC3FkvO/IQTybwe5Zc4LlDpcrmouCTEKl0zbQXa1R7A+TFGZK\nsMJ6T2BV/T3PNU0leDVo7O8SKk/LGigWt2t2hGC3Ka4U+YbnA1keJcVYYQKBgAYU\n7MEbC2iC5BbHNpmJjjZvWAO+o8bjiNCoYXf8/ONC03FSFNEU752tID2YlDGnL5pf\nB/we7Nbao1x4D7iDMhuzqE8Plmgrwrs7KmYFq4iEjhqp7rXYTHo8J3Pc2T46YVXN\na2q1VBr4SRPzR0RNcBbpRlPzGJSZSPzan9WkXMvxAoGBALVvx6aYLW34RlGax91L\nn5Jr2kNpQ9jaks5x2iGvrz6kf79QYgR9ijl9UgdLzh5gAmA6ujMJp9AKTIaWI/Oe\nIV8bBh4qrnTJt/rcJmDgdvBqPEWKbPRy/DsteOzuDwVt1g8nSkPfSsL3nt1rRLPB\n26jtTkSrZWX9eMx5FbRNN20I\n-----END PRIVATE KEY-----\n",
+  "client_email": "swimming-boat@appspot.gserviceaccount.com",
+  "client_id": "117362444186693096562",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/swimming-boat%40appspot.gserviceaccount.com"
+}
