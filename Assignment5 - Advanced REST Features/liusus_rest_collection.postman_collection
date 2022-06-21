@@ -1,0 +1,1455 @@
+{
+	"info": {
+		"_postman_id": "e9307e18-9c36-44c9-9153-7033897867fe",
+		"name": "hw5_liusus",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "add boat",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Set boat id environment variable from response",
+							"pm.environment.set(\"boat_id\", pm.response.json()[\"id\"]);",
+							"",
+							"pm.test(\"201 status code\", function () {",
+							"    //Check for 201 status code",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"",
+							"pm.test(\"content is valid\", function () {",
+							"   //Check if the response content is valid and matches the expected values",
+							"   pm.expect(pm.response.json()[\"name\"]).to.eq(\"Sea Food Time\");",
+							"   pm.expect(pm.response.json()[\"type\"]).to.eq(\"Catamaran\");",
+							"   pm.expect(pm.response.json()[\"length\"]).to.eq(28);",
+							"   //Check if the self url is correct",
+							"   const self_url = pm.environment.get(\"app_url\") + \"/boats/\" + pm.response.json()[\"id\"];",
+							"   pm.expect(pm.response.json()[\"self\"]).to.eq(self_url);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Sea Food Time\",\n    \"type\": \"Catamaran\",\n    \"length\": 28\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{app_url}}/boats"
+			},
+			"response": []
+		},
+		{
+			"name": "add boat Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Set boat id environment variable from response",
+							"pm.environment.set(\"boat_id1\", pm.response.json()[\"id\"]);",
+							"",
+							"pm.test(\"201 status code\", function () {",
+							"    //Check for 201 status code",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Ocean World Bye\",\n    \"type\": \"Catamaran\",\n    \"length\": 28\n}"
+				},
+				"url": "{{app_url}}/boats"
+			},
+			"response": []
+		},
+		{
+			"name": "add boat not unique name",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"403 status code\", function () {",
+							"    //Check for 400 status code",
+							"    pm.response.to.have.status(403);",
+							"});",
+							"",
+							"pm.test(\"403 error message\", function () {",
+							"     //Check for appropriate error message",
+							"     pm.expect(pm.response.json()[\"Error\"]).to.eq(\"Name must be unique\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Sea Food Time\",\n    \"type\": \"Catamaran\",\n    \"length\": 28\n}\n"
+				},
+				"url": "{{app_url}}/boats"
+			},
+			"response": []
+		},
+		{
+			"name": "add boat with missing attributes",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"400 status code\", function () {",
+							"    //Check for 400 status code",
+							"    pm.response.to.have.status(400);",
+							"});",
+							"",
+							"pm.test(\"400 error message\", function () {",
+							"     //Check for appropriate error message",
+							"     pm.expect(pm.response.json()[\"Error\"]).to.eq(\"The request object is missing at least one of the required attributes\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Sea Witch\",\n    \"type\": \"Catamaran\"\n}"
+				},
+				"url": "{{app_url}}/boats"
+			},
+			"response": []
+		},
+		{
+			"name": "add boat with wrong name input",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"400 status code\", function () {",
+							"    //Check for 400 status code",
+							"    pm.response.to.have.status(400);",
+							"});",
+							"",
+							"pm.test(\"400 error message\", function () {",
+							"     //Check for appropriate error message",
+							"     pm.expect(pm.response.json()[\"Error\"]).to.eq(\"Name cannot be longer than 16 characters. It can also only contain letters of the alphabet\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Sea Witch1\",\n    \"type\": \"Catamaran\",\n    \"length\": 28\n}\n"
+				},
+				"url": "{{app_url}}/boats"
+			},
+			"response": []
+		},
+		{
+			"name": "add boat with wrong name length",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"400 status code\", function () {",
+							"    //Check for 400 status code",
+							"    pm.response.to.have.status(400);",
+							"});",
+							"",
+							"pm.test(\"400 error message\", function () {",
+							"     //Check for appropriate error message",
+							"     pm.expect(pm.response.json()[\"Error\"]).to.eq(\"Name cannot be longer than 16 characters. It can also only contain letters of the alphabet\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Sea Witch hehehehehehehehehe\",\n    \"type\": \"Catamaran\",\n    \"length\": 28\n}\n"
+				},
+				"url": "{{app_url}}/boats"
+			},
+			"response": []
+		},
+		{
+			"name": "add boat with wrong type input",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"400 status code\", function () {",
+							"    //Check for 400 status code",
+							"    pm.response.to.have.status(400);",
+							"});",
+							"",
+							"pm.test(\"400 error message\", function () {",
+							"     //Check for appropriate error message",
+							"     pm.expect(pm.response.json()[\"Error\"]).to.eq(\"Type cannot be longer than 16 characters. It can also only contain letters of the alphabet\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Testing\",\n    \"type\": \"Cata4maran\",\n    \"length\": 28\n}\n"
+				},
+				"url": "{{app_url}}/boats"
+			},
+			"response": []
+		},
+		{
+			"name": "add boat with wrong type input Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"400 status code\", function () {",
+							"    //Check for 400 status code",
+							"    pm.response.to.have.status(400);",
+							"});",
+							"",
+							"pm.test(\"400 error message\", function () {",
+							"     //Check for appropriate error message",
+							"     pm.expect(pm.response.json()[\"Error\"]).to.eq(\"Length cant be longer than 7 digits. It can also only contain numbers\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"lenght\",\n    \"type\": \"a\",\n    \"length\": \"HI\"\n}\n"
+				},
+				"url": "{{app_url}}/boats"
+			},
+			"response": []
+		},
+		{
+			"name": "get all boat json",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"200 status code\", function () {",
+							"    //Check for success 200 response code",
+							"    pm.response.to.have.status(200);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true
+				}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{app_url}}/boats",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"boats"
+					],
+					"query": [
+						{
+							"key": "Accept",
+							"value": "text/html",
+							"disabled": true
+						},
+						{
+							"key": "Accept",
+							"value": "application/json",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get all boat html",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"200 status code\", function () {",
+							"    //Check for success 200 response code",
+							"    pm.response.to.have.status(200);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true
+				}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "text/html",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{app_url}}/boats",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"boats"
+					],
+					"query": [
+						{
+							"key": "Accept",
+							"value": "text/html",
+							"disabled": true
+						},
+						{
+							"key": "Accept",
+							"value": "application/json",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get all boat wrong Accept",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"406 status code\", function () {",
+							"    //Check for success 200 response code",
+							"    pm.response.to.have.status(406);",
+							"});",
+							"",
+							"",
+							"pm.test(\"406 error message\", function () {",
+							"     //Check for appropriate error message",
+							"     pm.expect(pm.response.json()[\"Error\"]).to.eq(\"This type is not supported, must be JSON or HTML\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true
+				}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "Chicken/Pie",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{app_url}}/boats",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"boats"
+					],
+					"query": [
+						{
+							"key": "Accept",
+							"value": "text/html",
+							"disabled": true
+						},
+						{
+							"key": "Accept",
+							"value": "application/json",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get boat with id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"200 status code\", function () {",
+							"    //Check for success 200 response code",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"content is valid\", function () {",
+							"    //Check if the content is valid",
+							"    pm.expect(pm.response.json()[\"name\"]).to.eq(\"Sea Food Time\");",
+							"    pm.expect(pm.response.json()[\"type\"]).to.eq(\"Catamaran\");",
+							"    pm.expect(pm.response.json()[\"length\"]).to.eq(28);",
+							"    //Check if the self url is correct",
+							"       const self_url = pm.environment.get(\"app_url\") + \"/boats/\" + pm.response.json()[\"id\"];",
+							"   console.log(\"HI\", pm.response.json()[\"self\"])",
+							"   pm.expect(pm.response.json()[\"self\"]).to.eq(self_url);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{app_url}}/boats/{{boat_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"boats",
+						"{{boat_id}}"
+					],
+					"query": [
+						{
+							"key": "Accept",
+							"value": "text/html",
+							"disabled": true
+						},
+						{
+							"key": "Accept",
+							"value": "application/json",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get boat with id Wrong Accept",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"406 status code\", function () {",
+							"    //Check for success 200 response code",
+							"    pm.response.to.have.status(406);",
+							"});",
+							"",
+							"",
+							"pm.test(\"406 error message\", function () {",
+							"     //Check for appropriate error message",
+							"     pm.expect(pm.response.json()[\"Error\"]).to.eq(\"This type is not supported, must be JSON or HTML\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true
+				}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "Chicken/Pie",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{app_url}}/boats/{{boat_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"boats",
+						"{{boat_id}}"
+					],
+					"query": [
+						{
+							"key": "Accept",
+							"value": "text/html",
+							"disabled": true
+						},
+						{
+							"key": "Accept",
+							"value": "application/json",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get boat with id json",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"200 status code\", function () {",
+							"    //Check for success 200 response code",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"content is valid\", function () {",
+							"    //Check if the content is valid",
+							"    pm.expect(pm.response.json()[\"name\"]).to.eq(\"Sea Food Time\");",
+							"    pm.expect(pm.response.json()[\"type\"]).to.eq(\"Catamaran\");",
+							"    pm.expect(pm.response.json()[\"length\"]).to.eq(28);",
+							"    //Check if the self url is correct",
+							"       const self_url = pm.environment.get(\"app_url\") + \"/boats/\" + pm.response.json()[\"id\"];",
+							"   console.log(\"HI\", pm.response.json()[\"self\"])",
+							"   pm.expect(pm.response.json()[\"self\"]).to.eq(self_url);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true
+				}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{app_url}}/boats/{{boat_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"boats",
+						"{{boat_id}}"
+					],
+					"query": [
+						{
+							"key": "Accept",
+							"value": "text/html",
+							"disabled": true
+						},
+						{
+							"key": "Accept",
+							"value": "application/json",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get boat with id html",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"200 status code\", function () {",
+							"    //Check for success 200 response code",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true
+				}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "text/html",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{app_url}}/boats/{{boat_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"boats",
+						"{{boat_id}}"
+					],
+					"query": [
+						{
+							"key": "Accept",
+							"value": "text/html",
+							"disabled": true
+						},
+						{
+							"key": "Accept",
+							"value": "application/json",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get boat with invalid id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"404 not found\", function () {",
+							"    //Check for 404 response",
+							"    pm.response.to.have.status(404);",
+							"});",
+							"",
+							"",
+							"pm.test(\"404 error message\", function () {",
+							"     //Check for error message",
+							"     pm.expect(pm.response.json()[\"Error\"]).to.eq(\"No boat with this boat_id exists\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "{{app_url}}/boats/{{invalid_boat_id}}"
+			},
+			"response": []
+		},
+		{
+			"name": "put boat with id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"303 status code\", function () {",
+							"    //Check for success 200 response code",
+							"    pm.response.to.have.status(303);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Put in boat\",\r\n  \"type\": \"Yatch\",\r\n  \"length\" : 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/boats/{{boat_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"boats",
+						"{{boat_id}}"
+					],
+					"query": [
+						{
+							"key": "Accept",
+							"value": "text/html",
+							"disabled": true
+						},
+						{
+							"key": "Accept",
+							"value": "application/json",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "put boat with invalid id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"404 status code\", function () {",
+							"    //Check for success 200 response code",
+							"    pm.response.to.have.status(404);",
+							"});",
+							"",
+							"",
+							"pm.test(\"404 error message\", function () {",
+							"     //Check for error message",
+							"     pm.expect(pm.response.json()[\"Error\"]).to.eq(\"No boat with this boat_id exists\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Odyssey Put\",\r\n  \"type\": \"Mega Yatch\",\r\n  \"length\": 200\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/boats/10000000000",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"boats",
+						"10000000000"
+					],
+					"query": [
+						{
+							"key": "Accept",
+							"value": "text/html",
+							"disabled": true
+						},
+						{
+							"key": "Accept",
+							"value": "application/json",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "edit boat",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"200 status code\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"content is valid\", function () {",
+							"    pm.expect(pm.response.json()[\"name\"]).to.eq(\"Odyssey II\");",
+							"    pm.expect(pm.response.json()[\"type\"]).to.eq(\"Mega Yatch\");",
+							"    pm.expect(pm.response.json()[\"length\"]).to.eq(200);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "text/html",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Odyssey II\",\r\n  \"type\": \"Mega Yatch\",\r\n  \"length\": 200\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/boats/{{boat_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"boats",
+						"{{boat_id}}"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "1",
+							"disabled": true
+						},
+						{
+							"key": "type",
+							"value": "2",
+							"disabled": true
+						},
+						{
+							"key": "length",
+							"value": "3",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "edit boat name Wrong",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"400 status code\", function () {",
+							"    //Check for success 200 response code",
+							"    pm.response.to.have.status(400);",
+							"});",
+							"",
+							"",
+							"pm.test(\"403 error message\", function () {",
+							"     //Check for appropriate error message",
+							"     pm.expect(pm.response.json()[\"Error\"]).to.eq(\"Name cannot be longer than 16 characters. It can also only contain letters of the alphabet\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Odd11\",\r\n  \"length\": 2001,\r\n  \"type\": \"yatch\"\r\n}"
+				},
+				"url": {
+					"raw": "{{app_url}}/boats/{{boat_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"boats",
+						"{{boat_id}}"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "1",
+							"disabled": true
+						},
+						{
+							"key": "type",
+							"value": "2",
+							"disabled": true
+						},
+						{
+							"key": "length",
+							"value": "3",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "edit boat length wrong",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"400 status code\", function () {",
+							"    //Check for success 200 response code",
+							"    pm.response.to.have.status(400);",
+							"});",
+							"",
+							"",
+							"pm.test(\"403 error message\", function () {",
+							"     //Check for appropriate error message",
+							"     pm.expect(pm.response.json()[\"Error\"]).to.eq(\"Type must be string\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"type\" : 1\r\n}"
+				},
+				"url": {
+					"raw": "{{app_url}}/boats/{{boat_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"boats",
+						"{{boat_id}}"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "1",
+							"disabled": true
+						},
+						{
+							"key": "type",
+							"value": "2",
+							"disabled": true
+						},
+						{
+							"key": "length",
+							"value": "3",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "edit boat length wrong Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"400 status code\", function () {",
+							"    //Check for success 200 response code",
+							"    pm.response.to.have.status(400);",
+							"});",
+							"",
+							"",
+							"pm.test(\"403 error message\", function () {",
+							"     //Check for appropriate error message",
+							"     pm.expect(pm.response.json()[\"Error\"]).to.eq(\"Length must be integer\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Odsd\",\r\n  \"length\": \"hi\"\r\n}"
+				},
+				"url": {
+					"raw": "{{app_url}}/boats/{{boat_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"boats",
+						"{{boat_id}}"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "1",
+							"disabled": true
+						},
+						{
+							"key": "type",
+							"value": "2",
+							"disabled": true
+						},
+						{
+							"key": "length",
+							"value": "3",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete boat 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"204 no content\", function () {",
+							"    //Check for appropriate 204 status code",
+							"    pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": "{{app_url}}/boats/{{boat_id}}"
+			},
+			"response": []
+		},
+		{
+			"name": "delete boat 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"204 no content\", function () {",
+							"    //Check for appropriate 204 status code",
+							"    pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": "{{app_url}}/boats/{{boat_id1}}"
+			},
+			"response": []
+		},
+		{
+			"name": "delete all boats",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Can't delete all boats\", function () {",
+							"    //Check for appropriate 204 status code",
+							"    pm.response.to.have.status(405);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": "{{app_url}}/boats"
+			},
+			"response": []
+		},
+		{
+			"name": "add boat Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Set boat id environment variable from response",
+							"pm.environment.set(\"boat_id2\", pm.response.json()[\"id\"]);",
+							"",
+							"pm.test(\"201 status code\", function () {",
+							"    //Check for 201 status code",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"",
+							"pm.test(\"content is valid\", function () {",
+							"   //Check if the response content is valid and matches the expected values",
+							"   pm.expect(pm.response.json()[\"name\"]).to.eq(\"Test Contents\");",
+							"   pm.expect(pm.response.json()[\"type\"]).to.eq(\"Catamaran\");",
+							"   pm.expect(pm.response.json()[\"length\"]).to.eq(28);",
+							"   //Check if the self url is correct",
+							"   const self_url = pm.environment.get(\"app_url\") + \"/boats/\" + pm.response.json()[\"id\"];",
+							"   pm.expect(pm.response.json()[\"self\"]).to.eq(self_url);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Test Contents\",\n    \"type\": \"Catamaran\",\n    \"length\": 28\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{app_url}}/boats"
+			},
+			"response": []
+		},
+		{
+			"name": "add boat Wrong Content_Type",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Set boat id environment variable from response",
+							"",
+							"pm.test(\"415 status code\", function () {",
+							"    //Check for 201 status code",
+							"    pm.response.to.have.status(415);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "text/html"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<p>HI</p>",
+					"options": {
+						"raw": {
+							"language": "text"
+						}
+					}
+				},
+				"url": "{{app_url}}/boats"
+			},
+			"response": []
+		},
+		{
+			"name": "add boat Wrong Content_Type Copy 2",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "text",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": " ",
+					"options": {
+						"raw": {
+							"language": "text"
+						}
+					}
+				},
+				"url": "{{app_url}}/boats/{{boat_id2}}"
+			},
+			"response": []
+		},
+		{
+			"name": "add boat Wrong Content_Type Copy 3",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Set boat id environment variable from response",
+							"",
+							"pm.test(\"415 status code\", function () {",
+							"    //Check for 201 status code",
+							"    pm.response.to.have.status(415);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "text/html"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": " ",
+					"options": {
+						"raw": {
+							"language": "text"
+						}
+					}
+				},
+				"url": "{{app_url}}/boats/{{boat_id2}}"
+			},
+			"response": []
+		},
+		{
+			"name": "add boat Wrong Content_Type Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Set boat id environment variable from response",
+							"",
+							"pm.test(\"405 status code\", function () {",
+							"    //Check for 201 status code",
+							"    pm.response.to.have.status(405);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "text/html"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": " ",
+					"options": {
+						"raw": {
+							"language": "text"
+						}
+					}
+				},
+				"url": "{{app_url}}/boats"
+			},
+			"response": []
+		},
+		{
+			"name": "delete boat 3",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"204 no content\", function () {",
+							"    //Check for appropriate 204 status code",
+							"    pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": "{{app_url}}/boats/{{boat_id2}}"
+			},
+			"response": []
+		}
+	]
+}

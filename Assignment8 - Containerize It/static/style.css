@@ -1,0 +1,18 @@
+body {
+    background-color:rgb(157, 233, 248);
+}
+p {
+    font-size : 14px;
+}
+a {
+    color:rgb(98, 5, 179);
+    font-size : 14px;
+    font-weight: bold;
+}
+a:hover {
+    background-color: aliceblue;
+    color: rgb(231, 82, 82);
+}
+pre {
+    font-size : 14px;
+}

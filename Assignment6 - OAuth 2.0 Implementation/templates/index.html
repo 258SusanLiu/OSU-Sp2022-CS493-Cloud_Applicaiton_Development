@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta description = "description" content = "Link page to authorize email">
+        <meta name = "author" content = "Susan Liu">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="static/style.css">
+        <title>Assignment 6 - Oauth</title>
+
+    </head>
+
+    <body>
+        <h1>Welcome to Assignment 6 Oauth</h1>
+        <!-- <a href='https://accounts.google.com/o/oauth2/v2/auth?response_type=code&client_id=852345851633-h4u7n8tf6u5ge6fujn1d9hu4sv8astui.apps.googleusercontent.com&redirect_uri=http://127.0.0.1:8080/oauth&scope=email profile&state=" + {{mestring}} + "'>Please follow this link to authorize.</a>-->
+        <a href={{data.fullurl}}>Please follow this link to authorize.</a>
+        <p>URL: {{data.fullurl}}</p>
+        <p>State: {{data.state}}</p>
+    </body>
+</html>
